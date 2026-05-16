@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decode The Conversation - Professional Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#07052B,#101c4a,#0b3155);
+color:white;
+padding:30px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+}
+
+.card{
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(12px);
+padding:35px;
+border-radius:28px;
+box-shadow:0 10px 40px rgba(0,0,0,.4);
+}
+
+.center{text-align:center}
+
+.logo{
+font-size:42px;
+font-weight:700;
+margin-bottom:20px;
+}
+
+.hero h1{
+font-size:56px;
+margin-bottom:20px;
+}
+
+.hero p{
+max-width:900px;
+margin:auto;
+line-height:1.9;
+opacity:.9;
+}
+
+button{
+border:none;
+cursor:pointer;
+font-family:inherit;
+transition:.3s;
+}
+
+.start-btn,.choice-btn,.next-btn{
+background:linear-gradient(90deg,#4fd1ff,#00ffd5);
+padding:18px 30px;
+border-radius:16px;
+font-weight:700;
+color:#07111f;
+}
+
+.start-btn{margin-top:35px}
+
+.choice-btn{
+text-align:left;
+font-size:16px;
+line-height:1.9;
+background:rgba(255,255,255,.06);
+color:white;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.choice-btn:hover{
+background:rgba(79,209,255,.15);
+transform:translateY(-2px);
+}
+
+.game,.feedback,.results{
+display:none;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.meters{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:30px;
+}
+
+.meter{
+background:rgba(255,255,255,.05);
+padding:18px;
+border-radius:18px;
+}
+
+.progress{
+height:12px;
+background:rgba(255,255,255,.1);
+border-radius:100px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.fill{
+height:100%;
+background:linear-gradient(90deg,#4fd1ff,#00ffd5);
+transition:.4s;
+}
+
+.message{
+background:rgba(255,255,255,.08);
+padding:24px;
+border-radius:22px;
+line-height:2;
+font-size:17px;
+margin-top:20px;
+}
+
+.context{
+margin-top:15px;
+opacity:.8;
+font-size:14px;
+line-height:1.8;
+}
+
+.question{
+font-size:28px;
+margin:35px 0;
+line-height:1.8;
+font-weight:600;
+}
+
+.choices{
+display:grid;
+gap:16px;
+}
+
+.feedback-card,.analysis{
+background:rgba(79,209,255,.08);
+padding:30px;
+border-radius:24px;
+line-height:2;
+}
+
+.badge{
+position:fixed;
+right:25px;
+bottom:25px;
+background:linear-gradient(135deg,#FFD700,#FFB800);
+padding:22px 26px;
+border-radius:22px;
+color:#07111f;
+font-weight:700;
+display:none;
+box-shadow:0 15px 40px rgba(255,215,0,.45);
+z-index:999999;
+animation:badgePop .45s ease;
+border:2px solid rgba(255,255,255,.4);
+}
+
+@keyframes badgePop{
+0%{transform:scale(.4) translateY(20px);opacity:0}
+70%{transform:scale(1.08);opacity:1}
+100%{transform:scale(1);opacity:1}
+}
+
+.score-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-top:30px;
+}
+
+.score{
+background:rgba(255,255,255,.05);
+padding:25px;
+border-radius:20px;
+text-align:center;
+}
+
+.score h2{
+font-size:42px;
+margin-top:10px;
+color:#00ffd5;
+}
+
+footer{
+margin-top:35px;
+opacity:.7;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="badge" id="badge">
+🏆 Psychological Safety Builder
+</div>
+
+<div class="container">
+
+<div class="card hero center" id="intro">
+
+<div class="logo">SKILLS BANK</div>
+
+<h1>Decode The Conversation</h1>
+
+<p>
+A professional-level active listening and emotional intelligence simulation designed for leaders, managers, and high-stakes workplace conversations.
+Every response influences trust, psychological safety, emotional escalation, and dialogue quality.
+</p>
+
+<button class="start-btn" onclick="startGame()">
+Start Professional Simulation
+</button>
+
+</div>
+
+<div class="card game" id="game">
+
+<div class="top">
+
+<div>
+<h2 id="scenarioTitle"></h2>
+<p id="scenarioName"></p>
+</div>
+
+<div>
+<h2>XP: <span id="xp">0</span></h2>
+</div>
+
+</div>
+
+<div class="meters">
+
+<div class="meter">
+<p>🤝 Trust Meter</p>
+<div class="progress">
+<div class="fill" id="trustFill" style="width:50%"></div>
+</div>
+</div>
+
+<div class="meter">
+<p>🛡 Psychological Safety</p>
+<div class="progress">
+<div class="fill" id="safeFill" style="width:50%"></div>
+</div>
+</div>
+
+<div class="meter">
+<p>🔥 Emotional Escalation</p>
+<div class="progress">
+<div class="fill" id="angerFill" style="width:35%"></div>
+</div>
+</div>
+
+</div>
+
+<div class="message" id="message"></div>
+
+<div class="context" id="context"></div>
+
+<div class="question" id="question"></div>
+
+<div class="choices" id="choices"></div>
+
+<footer>
+© 2026 Skills Bank · Transformative Training Solutions
+</footer>
+
+</div>
+
+<div class="card feedback" id="feedback">
+
+<div class="feedback-card">
+
+<h2 id="feedbackTitle"></h2>
+
+<p id="feedbackText"></p>
+
+<br>
+
+<h3>🎯 Coaching Insight</h3>
+
+<p id="coachText"></p>
+
+<br>
+
+<button class="next-btn" onclick="nextScenario()">
+Continue
+</button>
+
+</div>
+
+</div>
+
+<div class="card results" id="results">
+
+<div class="center">
+<div class="logo">SKILLS BANK</div>
+<h1>🏆 Simulation Complete</h1>
+</div>
+
+<div class="score-grid">
+
+<div class="score">
+<h3>Listening Score</h3>
+<h2 id="listen"></h2>
+</div>
+
+<div class="score">
+<h3>Safety Score</h3>
+<h2 id="safe"></h2>
+</div>
+
+<div class="score">
+<h3>EQ Score</h3>
+<h2 id="eq"></h2>
+</div>
+
+</div>
+
+<div class="analysis">
+
+<h2>🧠 Executive Communication Analysis</h2>
+
+<p id="analysis"></p>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const scenarios = [
+
+{
+title:'Scenario 1 of 10',
+name:'Executive Pressure',
+
+message:'I’m concerned your team may be prioritizing collaboration over execution speed.',
+
+context:'Tone: Calm but skeptical. Hidden emotion: concern about delivery risk.',
+
+question:'Which response BEST maintains dialogue while protecting psychological safety?',
+
+choices:[
+{
+text:'Execution speed matters to us too, although collaboration has prevented several operational issues recently.',
+effect:'neutral',
+feedback:'This response attempts balance, but subtly shifts into justification too early.',
+coach:'Explaining too quickly can reduce curiosity and unintentionally create defensiveness.'
+},
+
+{
+text:'Can you help me better understand which behaviors are creating that perception for you?',
+effect:'good',
+feedback:'Excellent response. You demonstrated curiosity without becoming defensive.',
+coach:'Inviting the stakeholder to elaborate reduces escalation and increases shared meaning.'
+},
+
+{
+text:'I think the real issue is that expectations around timelines haven’t been fully aligned.',
+effect:'bad',
+feedback:'This redirects responsibility too early and may feel dismissive.',
+coach:'Redirecting blame weakens psychological safety.'
+}
+]
+},
+
+{
+title:'Scenario 2 of 10',
+name:'Passive Resistance',
+
+message:'Sure… we can do it your way.',
+
+context:'Tone: polite but frustrated. Hidden emotion: resentment.',
+
+question:'What is the MOST emotionally intelligent response?',
+
+choices:[
+{
+text:'Great, glad we’re aligned.',
+effect:'bad',
+feedback:'This ignores the emotional signal underneath the words.',
+coach:'Strong listeners pay attention to tone and emotional cues—not just words.'
+},
+
+{
+text:'I sensed some hesitation just now. I’d like to understand your perspective before moving forward.',
+effect:'good',
+feedback:'Excellent emotional awareness and curiosity.',
+coach:'Surfacing hidden tension safely strengthens trust.'
+},
+
+{
+text:'If you disagree, let’s discuss it offline.',
+effect:'neutral',
+feedback:'This acknowledges disagreement but moves away from immediate dialogue.',
+coach:'Delaying difficult conversations can increase unresolved tension.'
+}
+]
+}
+
+];
+
+while(scenarios.length < 10){
+scenarios.push({...scenarios[scenarios.length % 2], title:`Scenario ${scenarios.length+1} of 10`});
+}
+
+let current=0;
+let xp=0;
+let trust=50;
+let safety=50;
+let anger=35;
+
+function startGame(){
+intro.style.display='none';
+game.style.display='block';
+loadScenario();
+}
+
+function loadScenario(){
+
+const s=scenarios[current];
+
+scenarioTitle.innerHTML=s.title;
+scenarioName.innerHTML=s.name;
+message.innerHTML=s.message;
+context.innerHTML=s.context;
+question.innerHTML=s.question;
+
+choices.innerHTML='';
+
+s.choices.forEach(c=>{
+
+const btn=document.createElement('button');
+
+btn.className='choice-btn';
+
+btn.innerHTML=c.text;
+
+btn.onclick=()=>selectChoice(c);
+
+choices.appendChild(btn);
+
+});
+
+updateMeters();
+
+}
+
+function selectChoice(c){
+
+game.style.display='none';
+feedback.style.display='block';
+
+feedbackTitle.innerHTML=
+c.effect==='good'
+?'✅ High-Level Active Listening'
+:c.effect==='neutral'
+?'⚠ Partially Effective Response'
+:'❌ Dialogue Risk Detected';
+
+feedbackText.innerHTML=c.feedback;
+coachText.innerHTML=c.coach;
+
+if(c.effect==='good'){
+xp+=250;
+trust+=15;
+safety+=15;
+anger-=10;
+showBadge();
+}
+else if(c.effect==='bad'){
+trust-=15;
+safety-=20;
+anger+=20;
+}
+else{
+xp+=100;
+trust+=5;
+}
+
+updateMeters();
+
+xp.innerHTML=xp;
+
+}
+
+function nextScenario(){
+
+feedback.style.display='none';
+
+current++;
+
+if(current < scenarios.length){
+game.style.display='block';
+loadScenario();
+}
+else{
+showResults();
+}
+
+}
+
+function updateMeters(){
+
+trustFill.style.width=trust+'%';
+safeFill.style.width=safety+'%';
+angerFill.style.width=anger+'%';
+
+}
+
+function showBadge(){
+
+badge.style.display='block';
+
+setTimeout(()=>{
+badge.style.display='none';
+},2200);
+
+}
+
+function showResults(){
+
+results.style.display='block';
+
+listen.innerHTML=Math.min(100,Math.round(xp/15));
+safe.innerHTML=Math.max(0,safety);
+eq.innerHTML=Math.max(0,trust);
+
+let text='';
+
+if(trust >= 85){
+
+text='You demonstrated executive-level active listening skills, emotional awareness, and strong psychological safety behaviors during high-pressure conversations. Your responses consistently balanced curiosity, empathy, and dialogue preservation.';
+
+}
+
+else if(trust >= 60){
+
+text='You showed strong communication potential with good listening behaviors. To strengthen your impact further, focus on reducing subtle defensiveness and deepening emotional exploration before problem-solving.';
+
+}
+
+else{
+
+text='Several responses unintentionally reduced safety or increased defensiveness. Continue practicing curiosity, emotional validation, and collaborative inquiry during difficult conversations.';
+
+}
+
+analysis.innerHTML=text;
+
+feedback.style.display='none';
+
+}
+
+</script>
+
+</body>
+</html>
