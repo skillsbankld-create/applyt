@@ -1,396 +1,777 @@
-# Advanced Crucial Conversations Simulation — Final Version
-
-Replace the current `scenarios` array in your HTML file with the following advanced version.
-
-```javascript
-const scenarios = [
-
-{
- title:'Scenario 1 of 10',
- name:'Executive Pressure',
-
- message:'I’m starting to wonder whether your team is optimizing for alignment at the expense of decisiveness.',
-
- context:'Tone: composed but evaluative. Hidden emotion: concern about leadership maturity and delivery confidence.',
-
- question:'Which response BEST protects strategic dialogue without triggering defensiveness or avoidance?',
-
- choices:[
- {
- text:'I can understand why it may appear that way from the outside. I’m curious which moments specifically shaped that impression for you.',
- effect:'good',
- feedback:'This response preserved psychological safety while expanding shared meaning. The wording reduced perceived threat and encouraged dialogue rather than justification.',
- coach:'High-level communicators resist the urge to explain too early. Curiosity first creates room for trust and clarity.'
- },
-
- {
- text:'We’ve intentionally slowed a few decisions recently because moving faster would’ve increased downstream risk.',
- effect:'neutral',
- feedback:'This response sounds thoughtful and strategic, but it subtly shifts into justification before fully understanding the concern.',
- coach:'Sophisticated defensiveness often appears reasonable. Strong dialogue requires exploration before explanation.'
- },
-
- {
- text:'I think part of the challenge is that priorities have shifted multiple times over the quarter.',
- effect:'bad',
- feedback:'Although factually possible, this response redirects accountability and risks increasing political defensiveness.',
- coach:'Blame-shifting weakens credibility during high-stakes conversations.'
- }
- ]
-},
-
-{
- title:'Scenario 2 of 10',
- name:'Passive Resistance',
-
- message:'That works for me… if that’s the direction we’ve already decided on.',
-
- context:'Tone: polite but emotionally withdrawn. Hidden emotion: reduced influence and disengagement.',
-
- question:'What response MOST effectively surfaces unspoken concerns while preserving trust?',
-
- choices:[
- {
- text:'I get the sense there may still be concerns we haven’t fully discussed yet.',
- effect:'good',
- feedback:'This response gently surfaces tension without assigning blame or escalating emotion.',
- coach:'Emotionally intelligent leaders name what is felt without forcing agreement.'
- },
-
- {
- text:'I want us to avoid revisiting decisions repeatedly once alignment has been reached.',
- effect:'neutral',
- feedback:'This response reinforces decisiveness, but it may unintentionally shut down psychological safety.',
- coach:'Efficiency language can sometimes silence important disagreement.'
- },
-
- {
- text:'If you strongly disagree, we can escalate the discussion before moving forward.',
- effect:'bad',
- feedback:'This introduces hierarchy pressure and increases perceived interpersonal risk.',
- coach:'Escalation language often reduces openness rather than improving dialogue.'
- }
- ]
-},
-
-{
- title:'Scenario 3 of 10',
- name:'Stakeholder Undermining',
-
- message:'Interesting proposal. I’m just not fully convinced the organization is ready for that level of change yet.',
-
- context:'Tone: diplomatic skepticism. Hidden emotion: political caution and influence testing.',
-
- question:'Which response BEST maintains influence while reducing political tension?',
-
- choices:[
- {
- text:'That’s helpful feedback. What concerns do you think leaders across the organization would raise first?',
- effect:'good',
- feedback:'Excellent strategic listening. This response transforms resistance into collaborative exploration.',
- coach:'Powerful communicators invite concerns into the open instead of debating them immediately.'
- },
-
- {
- text:'The organization has adapted successfully to bigger transformations before.',
- effect:'neutral',
- feedback:'This attempts reassurance, but it subtly counters the stakeholder rather than exploring their concern.',
- coach:'Facts alone rarely resolve emotionally or politically driven hesitation.'
- },
-
- {
- text:'Respectfully, waiting for complete readiness usually delays innovation indefinitely.',
- effect:'bad',
- feedback:'Although intellectually valid, this response increases emotional threat and public defensiveness.',
- coach:'Being right is not the same as maintaining dialogue.'
- }
- ]
-},
-
-{
- title:'Scenario 4 of 10',
- name:'Leadership Credibility',
-
- message:'Some people on the team feel communication has become less transparent recently.',
-
- context:'Tone: cautious honesty. Hidden emotion: fear of leadership reaction.',
-
- question:'What response BEST encourages honest dialogue while protecting trust?',
-
- choices:[
- {
- text:'I appreciate you raising it directly. What situations do you think contributed most to that perception?',
- effect:'good',
- feedback:'This response rewards honesty and encourages deeper discussion without defensiveness.',
- coach:'People speak more openly when leaders respond with curiosity instead of self-protection.'
- },
-
- {
- text:'Transparency has actually increased in several areas over the past quarter.',
- effect:'neutral',
- feedback:'While potentially accurate, this response prioritizes correction over understanding.',
- coach:'Correcting too early can unintentionally invalidate perception and emotion.'
- },
-
- {
- text:'I wish concerns like this had been raised earlier instead of building quietly.',
- effect:'bad',
- feedback:'This creates subtle blame and may discourage future openness.',
- coach:'People stop speaking honestly when vulnerability feels punished.'
- }
- ]
-},
-
-{
- title:'Scenario 5 of 10',
- name:'Cross-Functional Friction',
-
- message:'Honestly, it sometimes feels like your department creates unnecessary complexity.',
-
- context:'Tone: frustrated but controlled. Hidden emotion: operational resentment.',
-
- question:'Which response BEST reduces escalation while maintaining partnership?',
-
- choices:[
- {
- text:'It sounds like the process may be creating more friction than support in some areas. I’d like to understand where that’s happening most.',
- effect:'good',
- feedback:'This response validates frustration without immediately defending the team.',
- coach:'Acknowledging impact creates psychological safety even before agreement exists.'
- },
-
- {
- text:'Many of those processes exist because previous shortcuts created larger operational issues.',
- effect:'neutral',
- feedback:'Reasonable explanation, but it subtly communicates correction instead of collaboration.',
- coach:'Explanations delivered too early can sound like resistance.'
- },
-
- {
- text:'Other departments have adapted to the process without major concerns.',
- effect:'bad',
- feedback:'This comparison increases defensiveness and weakens trust.',
- coach:'Comparisons often invalidate experience instead of resolving tension.'
- }
- ]
-},
-
-{
- title:'Scenario 6 of 10',
- name:'Silent Disengagement',
-
- message:'I’ll support the decision.',
-
- context:'Tone: emotionally flat. Hidden emotion: resignation and withdrawal.',
-
- question:'What response MOST effectively reopens meaningful dialogue?',
-
- choices:[
- {
- text:'I appreciate your support. At the same time, I want to make sure we’re not missing concerns that still matter to you.',
- effect:'good',
- feedback:'This balances appreciation with emotional awareness and invitation.',
- coach:'Strong leaders listen for what is absent, not only what is spoken.'
- },
-
- {
- text:'Thank you. Alignment will help us move significantly faster.',
- effect:'neutral',
- feedback:'This reinforces efficiency, but may unintentionally reward silence over honesty.',
- coach:'Speed should not come at the cost of psychological safety.'
- },
-
- {
- text:'Good. We need commitment once decisions are finalized.',
- effect:'bad',
- feedback:'This reinforces compliance rather than dialogue.',
- coach:'Compliance without engagement often creates hidden resistance later.'
- }
- ]
-},
-
-{
- title:'Scenario 7 of 10',
- name:'Public Challenge',
-
- message:'I’m not sure the data fully supports that conclusion.',
-
- context:'Tone: public skepticism during leadership meeting. Hidden emotion: status positioning.',
-
- question:'Which response BEST protects credibility without escalating tension?',
-
- choices:[
- {
- text:'That’s an important concern. Which part of the analysis feels least convincing to you?',
- effect:'good',
- feedback:'This response remains composed and collaborative under pressure.',
- coach:'Leaders maintain influence by staying curious instead of becoming reactive.'
- },
-
- {
- text:'The conclusions are based on multiple validated data sources.',
- effect:'neutral',
- feedback:'This protects expertise but subtly moves into self-defense.',
- coach:'Credibility increases when leaders explore concerns before proving themselves right.'
- },
-
- {
- text:'I think we may be interpreting the same information very differently.',
- effect:'bad',
- feedback:'This creates subtle opposition and increases interpersonal friction.',
- coach:'Positioning conversations as “you versus me” weakens collaboration.'
- }
- ]
-},
-
-{
- title:'Scenario 8 of 10',
- name:'Emotional Escalation',
-
- message:'Every time this comes up, it feels like our concerns get minimized.',
-
- context:'Tone: emotionally charged. Hidden emotion: accumulated frustration.',
-
- question:'Which response MOST effectively lowers emotional intensity?',
-
- choices:[
- {
- text:'I can hear that this issue has felt consistently frustrating, and I don’t want us to overlook that experience.',
- effect:'good',
- feedback:'Excellent emotional validation without defensiveness or over-apologizing.',
- coach:'People calm down faster when they feel understood rather than corrected.'
- },
-
- {
- text:'That certainly hasn’t been our intention during these discussions.',
- effect:'neutral',
- feedback:'This protects intent but unintentionally weakens acknowledgment of impact.',
- coach:'Intent and impact are not experienced the same way emotionally.'
- },
-
- {
- text:'I think saying concerns are minimized may be overstating the situation.',
- effect:'bad',
- feedback:'This directly invalidates emotion and increases perceived threat.',
- coach:'Minimizing emotion almost always escalates difficult conversations.'
- }
- ]
-},
-
-{
- title:'Scenario 9 of 10',
- name:'Authority Pressure',
-
- message:'At the executive level, we simply don’t have time for prolonged alignment conversations.',
-
- context:'Tone: impatient authority. Hidden emotion: pressure and urgency.',
-
- question:'Which response BEST balances urgency with healthy dialogue?',
-
- choices:[
- {
- text:'I understand the urgency. I also think a few focused conversations now could reduce larger execution risks later.',
- effect:'good',
- feedback:'This response respects urgency without abandoning thoughtful collaboration.',
- coach:'Executive communication balances speed with long-term trust and clarity.'
- },
-
- {
- text:'Alignment conversations are essential if we want sustainable buy-in.',
- effect:'neutral',
- feedback:'Reasonable point, but it subtly dismisses the executive’s pressure.',
- coach:'Acknowledging pressure first increases receptiveness.'
- },
-
- {
- text:'Rushing decisions is usually what creates organizational failure.',
- effect:'bad',
- feedback:'This response escalates defensiveness by framing urgency as recklessness.',
- coach:'High-pressure stakeholders respond poorly to implied criticism.'
- }
- ]
-},
-
-{
- title:'Scenario 10 of 10',
- name:'Executive Trust Recovery',
-
- message:'I need to be honest — confidence in this initiative has started to weaken.',
-
- context:'Tone: serious and direct. Hidden emotion: disappointment and uncertainty.',
-
- question:'Which response BEST rebuilds trust while keeping the conversation productive?',
-
- choices:[
- {
- text:'I appreciate the honesty. I’d like to better understand what’s contributing most to the loss of confidence so we can address it directly.',
- effect:'good',
- feedback:'This response demonstrates emotional maturity, ownership, and collaborative problem-solving.',
- coach:'Trust recovery begins when leaders create safety around difficult truth.'
- },
-
- {
- text:'There are several external factors that have affected momentum recently.',
- effect:'neutral',
- feedback:'This introduces context, but it risks sounding like explanation before understanding.',
- coach:'Context matters more after emotional concerns are fully explored.'
- },
-
- {
- text:'I think confidence would improve if expectations around the initiative were more realistic.',
- effect:'bad',
- feedback:'This subtly redirects responsibility back to stakeholders.',
- coach:'Deflecting responsibility weakens trust recovery efforts.'
- }
- ]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Crucial Conversations</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-];
-```
+body{
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#07052B,#101c4a,#0b3155);
+color:white;
+padding:30px;
+}
 
-## Additional Advanced Improvements
+.container{
+max-width:1200px;
+margin:auto;
+}
 
-### Replace This:
+.card{
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(12px);
+padding:35px;
+border-radius:28px;
+box-shadow:0 10px 40px rgba(0,0,0,.4);
+}
 
-```javascript
-h1>Decode The Conversation</h1>
-```
+.center{
+text-align:center;
+}
 
-### With This:
+.logo{
+font-size:42px;
+font-weight:700;
+margin-bottom:20px;
+}
 
-```javascript
-h1>Executive Crucial Conversations</h1>
-```
+.hero h1{
+font-size:54px;
+margin-bottom:20px;
+}
 
----
+.hero p{
+max-width:900px;
+margin:auto;
+line-height:1.9;
+opacity:.9;
+}
 
-### Replace This:
+button{
+border:none;
+cursor:pointer;
+font-family:inherit;
+transition:.3s;
+}
 
-```javascript
-<p>
-A professional-level active listening and emotional intelligence simulation designed for leaders, managers, and high-stakes workplace conversations.
-</p>
-```
+.start-btn,
+.choice-btn,
+.next-btn{
 
-### With This:
+background:linear-gradient(90deg,#4fd1ff,#00ffd5);
+padding:18px 30px;
+border-radius:16px;
+font-weight:700;
+color:#07111f;
 
-```javascript
+}
+
+.start-btn{
+margin-top:35px;
+}
+
+.choice-btn{
+
+text-align:left;
+font-size:16px;
+line-height:1.9;
+background:rgba(255,255,255,.06);
+color:white;
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.choice-btn:hover{
+
+background:rgba(79,209,255,.15);
+transform:translateY(-2px);
+
+}
+
+.game,
+.feedback,
+.results{
+display:none;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.meters{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:30px;
+}
+
+.meter{
+background:rgba(255,255,255,.05);
+padding:18px;
+border-radius:18px;
+}
+
+.progress{
+height:12px;
+background:rgba(255,255,255,.1);
+border-radius:100px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.fill{
+height:100%;
+background:linear-gradient(90deg,#4fd1ff,#00ffd5);
+transition:.4s;
+}
+
+.message{
+background:rgba(255,255,255,.08);
+padding:24px;
+border-radius:22px;
+line-height:2;
+font-size:17px;
+margin-top:20px;
+}
+
+.context{
+margin-top:15px;
+opacity:.8;
+font-size:14px;
+line-height:1.8;
+}
+
+.question{
+font-size:28px;
+margin:35px 0;
+line-height:1.8;
+font-weight:600;
+}
+
+.choices{
+display:grid;
+gap:16px;
+}
+
+.feedback-card,
+.analysis{
+background:rgba(79,209,255,.08);
+padding:30px;
+border-radius:24px;
+line-height:2;
+}
+
+.score-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-top:30px;
+}
+
+.score{
+background:rgba(255,255,255,.05);
+padding:25px;
+border-radius:20px;
+text-align:center;
+}
+
+.score h2{
+font-size:42px;
+margin-top:10px;
+color:#00ffd5;
+}
+
+footer{
+margin-top:35px;
+opacity:.7;
+text-align:center;
+}
+
+.badge{
+
+position:fixed;
+right:25px;
+bottom:25px;
+background:linear-gradient(135deg,#FFD700,#FFB800);
+padding:22px 26px;
+border-radius:22px;
+color:#07111f;
+font-weight:700;
+display:none;
+box-shadow:0 15px 40px rgba(255,215,0,.45);
+z-index:999999;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="badge" id="badge">
+🏆 Executive Dialogue Master
+</div>
+
+<div class="container">
+
+<div class="card hero center" id="intro">
+
+<div class="logo">
+SKILLS BANK
+</div>
+
+<h1>
+Executive Crucial Conversations
+</h1>
+
 <p>
 An advanced executive communication simulation designed to challenge leaders in high-stakes conversations involving tension, politics, emotional escalation, resistance, and psychological safety.
 Every response influences trust, influence, credibility, and dialogue quality under pressure.
 </p>
-```
 
----
+<button class="start-btn" onclick="startGame()">
+Start Executive Simulation
+</button>
 
-## Final Result
+</div>
 
-This version is:
+<div class="card game" id="game">
 
-* More psychologically realistic
-* Harder to predict
-* Executive-level
-* Emotionally nuanced
-* Politically intelligent
-* Much closer to real Crucial Conversations situations
-* Designed for advanced learners instead of beginners
+<div class="top">
+
+<div>
+
+<h2 id="scenarioTitle"></h2>
+<p id="scenarioName"></p>
+
+</div>
+
+<div>
+
+<h2>
+XP:
+<span id="xp">0</span>
+</h2>
+
+</div>
+
+</div>
+
+<div class="meters">
+
+<div class="meter">
+
+<p>🤝 Trust Meter</p>
+
+<div class="progress">
+<div class="fill" id="trustFill" style="width:50%"></div>
+</div>
+
+</div>
+
+<div class="meter">
+
+<p>🛡 Psychological Safety</p>
+
+<div class="progress">
+<div class="fill" id="safeFill" style="width:50%"></div>
+</div>
+
+</div>
+
+<div class="meter">
+
+<p>🔥 Emotional Escalation</p>
+
+<div class="progress">
+<div class="fill" id="angerFill" style="width:35%"></div>
+</div>
+
+</div>
+
+</div>
+
+<div class="message" id="message"></div>
+
+<div class="context" id="context"></div>
+
+<div class="question" id="question"></div>
+
+<div class="choices" id="choices"></div>
+
+<footer>
+© 2026 Skills Bank · Executive Learning Experiences
+</footer>
+
+</div>
+
+<div class="card feedback" id="feedback">
+
+<div class="feedback-card">
+
+<h2 id="feedbackTitle"></h2>
+
+<p id="feedbackText"></p>
+
+<br>
+
+<h3>
+🎯 Coaching Insight
+</h3>
+
+<p id="coachText"></p>
+
+<br>
+
+<button class="next-btn" onclick="nextScenario()">
+Continue
+</button>
+
+</div>
+
+</div>
+
+<div class="card results" id="results">
+
+<div class="center">
+
+<div class="logo">
+SKILLS BANK
+</div>
+
+<h1>
+🏆 Simulation Complete
+</h1>
+
+</div>
+
+<div class="score-grid">
+
+<div class="score">
+<h3>Executive Listening</h3>
+<h2 id="listen"></h2>
+</div>
+
+<div class="score">
+<h3>Psychological Safety</h3>
+<h2 id="safe"></h2>
+</div>
+
+<div class="score">
+<h3>Dialogue Intelligence</h3>
+<h2 id="eq"></h2>
+</div>
+
+</div>
+
+<div class="analysis">
+
+<h2>
+🧠 Executive Communication Analysis
+</h2>
+
+<p id="analysis"></p>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const scenarios = [
+
+{
+title:'Scenario 1 of 6',
+name:'Executive Pressure',
+
+message:'I’m starting to wonder whether your team is optimizing for alignment at the expense of decisiveness.',
+
+context:'Tone: composed but evaluative. Hidden emotion: concern about leadership maturity and delivery confidence.',
+
+question:'Which response BEST protects strategic dialogue without triggering defensiveness or avoidance?',
+
+choices:[
+{
+text:'I can understand why it may appear that way from the outside. I’m curious which moments specifically shaped that impression for you.',
+effect:'good',
+feedback:'This response preserved psychological safety while expanding shared meaning.',
+coach:'Curiosity before explanation creates trust and reduces defensiveness.'
+},
+
+{
+text:'We’ve intentionally slowed a few decisions recently because moving faster would’ve increased downstream risk.',
+effect:'neutral',
+feedback:'This sounds strategic, but subtly shifts into justification too early.',
+coach:'Sophisticated defensiveness often appears reasonable.'
+},
+
+{
+text:'I think part of the challenge is that priorities have shifted multiple times over the quarter.',
+effect:'bad',
+feedback:'This redirects accountability and increases political defensiveness.',
+coach:'Blame-shifting weakens credibility during high-stakes conversations.'
+}
+]
+},
+
+{
+title:'Scenario 2 of 6',
+name:'Passive Resistance',
+
+message:'That works for me… if that’s the direction we’ve already decided on.',
+
+context:'Tone: polite but emotionally withdrawn. Hidden emotion: reduced influence and disengagement.',
+
+question:'What response MOST effectively surfaces unspoken concerns while preserving trust?',
+
+choices:[
+{
+text:'I get the sense there may still be concerns we haven’t fully discussed yet.',
+effect:'good',
+feedback:'This gently surfaces tension without assigning blame.',
+coach:'Emotionally intelligent leaders name what is felt without forcing agreement.'
+},
+
+{
+text:'I want us to avoid revisiting decisions repeatedly once alignment has been reached.',
+effect:'neutral',
+feedback:'This reinforces decisiveness, but may unintentionally shut down safety.',
+coach:'Efficiency language can sometimes silence disagreement.'
+},
+
+{
+text:'If you strongly disagree, we can escalate the discussion before moving forward.',
+effect:'bad',
+feedback:'This introduces hierarchy pressure and increases interpersonal risk.',
+coach:'Escalation language often reduces openness.'
+}
+]
+},
+
+{
+title:'Scenario 3 of 6',
+name:'Stakeholder Undermining',
+
+message:'Interesting proposal. I’m just not fully convinced the organization is ready for that level of change yet.',
+
+context:'Tone: diplomatic skepticism. Hidden emotion: political caution and influence testing.',
+
+question:'Which response BEST maintains influence while reducing political tension?',
+
+choices:[
+{
+text:'That’s helpful feedback. What concerns do you think leaders across the organization would raise first?',
+effect:'good',
+feedback:'Excellent strategic listening.',
+coach:'Powerful communicators invite concerns into the open instead of debating them.'
+},
+
+{
+text:'The organization has adapted successfully to bigger transformations before.',
+effect:'neutral',
+feedback:'This attempts reassurance, but subtly counters the stakeholder.',
+coach:'Facts alone rarely resolve emotional hesitation.'
+},
+
+{
+text:'Respectfully, waiting for complete readiness usually delays innovation indefinitely.',
+effect:'bad',
+feedback:'Although intellectually valid, this response increases emotional threat.',
+coach:'Being right is not the same as maintaining dialogue.'
+}
+]
+},
+
+{
+title:'Scenario 4 of 6',
+name:'Leadership Credibility',
+
+message:'Some people on the team feel communication has become less transparent recently.',
+
+context:'Tone: cautious honesty. Hidden emotion: fear of leadership reaction.',
+
+question:'What response BEST encourages honest dialogue while protecting trust?',
+
+choices:[
+{
+text:'I appreciate you raising it directly. What situations do you think contributed most to that perception?',
+effect:'good',
+feedback:'This rewards honesty and encourages deeper discussion.',
+coach:'People speak more openly when leaders respond with curiosity.'
+},
+
+{
+text:'Transparency has actually increased in several areas over the past quarter.',
+effect:'neutral',
+feedback:'Potentially accurate, but prioritizes correction over understanding.',
+coach:'Correcting too early can unintentionally invalidate emotion.'
+},
+
+{
+text:'I wish concerns like this had been raised earlier instead of building quietly.',
+effect:'bad',
+feedback:'This creates subtle blame and discourages openness.',
+coach:'People stop speaking honestly when vulnerability feels punished.'
+}
+]
+},
+
+{
+title:'Scenario 5 of 6',
+name:'Cross-Functional Friction',
+
+message:'Honestly, it sometimes feels like your department creates unnecessary complexity.',
+
+context:'Tone: frustrated but controlled. Hidden emotion: operational resentment.',
+
+question:'Which response BEST reduces escalation while maintaining partnership?',
+
+choices:[
+{
+text:'It sounds like the process may be creating more friction than support in some areas. I’d like to understand where that’s happening most.',
+effect:'good',
+feedback:'This validates frustration without immediate defensiveness.',
+coach:'Acknowledging impact creates safety before agreement exists.'
+},
+
+{
+text:'Many of those processes exist because previous shortcuts created larger operational issues.',
+effect:'neutral',
+feedback:'Reasonable explanation, but subtly corrective.',
+coach:'Explanations delivered too early can sound resistant.'
+},
+
+{
+text:'Other departments have adapted to the process without major concerns.',
+effect:'bad',
+feedback:'This comparison increases defensiveness.',
+coach:'Comparisons often invalidate experience.'
+}
+]
+},
+
+{
+title:'Scenario 6 of 6',
+name:'Executive Trust Recovery',
+
+message:'I need to be honest — confidence in this initiative has started to weaken.',
+
+context:'Tone: serious and direct. Hidden emotion: disappointment and uncertainty.',
+
+question:'Which response BEST rebuilds trust while keeping the conversation productive?',
+
+choices:[
+{
+text:'I appreciate the honesty. I’d like to better understand what’s contributing most to the loss of confidence so we can address it directly.',
+effect:'good',
+feedback:'This demonstrates emotional maturity and collaborative problem-solving.',
+coach:'Trust recovery begins when leaders create safety around difficult truth.'
+},
+
+{
+text:'There are several external factors that have affected momentum recently.',
+effect:'neutral',
+feedback:'This introduces context too early.',
+coach:'Understand emotion before explaining context.'
+},
+
+{
+text:'I think confidence would improve if expectations around the initiative were more realistic.',
+effect:'bad',
+feedback:'This subtly redirects responsibility back to stakeholders.',
+coach:'Deflecting responsibility weakens trust recovery.'
+}
+]
+}
+
+];
+
+let current=0;
+let xp=0;
+let trust=50;
+let safety=50;
+let anger=35;
+
+function startGame(){
+
+intro.style.display='none';
+game.style.display='block';
+
+loadScenario();
+
+}
+
+function loadScenario(){
+
+const s=scenarios[current];
+
+scenarioTitle.innerHTML=s.title;
+scenarioName.innerHTML=s.name;
+message.innerHTML=s.message;
+context.innerHTML=s.context;
+question.innerHTML=s.question;
+
+choices.innerHTML='';
+
+s.choices.forEach(c=>{
+
+const btn=document.createElement('button');
+
+btn.className='choice-btn';
+
+btn.innerHTML=c.text;
+
+btn.onclick=()=>selectChoice(c);
+
+choices.appendChild(btn);
+
+});
+
+updateMeters();
+
+}
+
+function selectChoice(c){
+
+game.style.display='none';
+feedback.style.display='block';
+
+feedbackTitle.innerHTML=
+c.effect==='good'
+?'✅ Executive-Level Response'
+:c.effect==='neutral'
+?'⚠ Partially Effective Response'
+:'❌ Dialogue Risk Detected';
+
+feedbackText.innerHTML=c.feedback;
+coachText.innerHTML=c.coach;
+
+if(c.effect==='good'){
+
+xp+=250;
+trust+=15;
+safety+=15;
+anger-=10;
+
+showBadge();
+
+}
+
+else if(c.effect==='bad'){
+
+trust-=15;
+safety-=20;
+anger+=20;
+
+}
+
+else{
+
+xp+=100;
+trust+=5;
+
+}
+
+updateMeters();
+
+document.getElementById('xp').innerHTML=xp;
+
+}
+
+function nextScenario(){
+
+feedback.style.display='none';
+
+current++;
+
+if(current < scenarios.length){
+
+game.style.display='block';
+loadScenario();
+
+}
+
+else{
+
+showResults();
+
+}
+
+}
+
+function updateMeters(){
+
+trustFill.style.width=trust+'%';
+safeFill.style.width=safety+'%';
+angerFill.style.width=anger+'%';
+
+}
+
+function showBadge(){
+
+badge.style.display='block';
+
+setTimeout(()=>{
+
+badge.style.display='none';
+
+},2200);
+
+}
+
+function showResults(){
+
+results.style.display='block';
+
+listen.innerHTML=Math.min(100,Math.round(xp/15));
+safe.innerHTML=Math.max(0,safety);
+eq.innerHTML=Math.max(0,trust);
+
+let text='';
+
+if(trust >= 85){
+
+text='You demonstrated executive-level active listening skills, emotional awareness, and strong psychological safety behaviors during high-pressure conversations.';
+
+}
+
+else if(trust >= 60){
+
+text='You showed strong communication potential with opportunities to reduce subtle defensiveness and deepen emotional exploration.';
+
+}
+
+else{
+
+text='Several responses unintentionally increased tension or weakened psychological safety. Continue practicing emotional validation and collaborative inquiry.';
+
+}
+
+analysis.innerHTML=text;
+
+feedback.style.display='none';
+
+}
+
+</script>
+
+</body>
+</html>
